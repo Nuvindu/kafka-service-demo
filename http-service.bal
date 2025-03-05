@@ -1,17 +1,14 @@
 import ballerina/http;
 import ballerinax/kafka;
 
-service / on new http:Listener(8082) {
-    kafka:Consumer consumer;
+http:Listener httpListener = check new (9090);
 
-    function init() returns error? {
-        self.consumer = check new (bootstrapServers, consumerConfig);
-    }
+http:Service helloService = service object {
 
     resource function get offsets() returns kafka:PartitionOffset[]|error? {
-        return check self.consumer->getEndOffsets([{
+        return check kafkaConsumer->getEndOffsets([{
             topic: "topic_11",
             partition: 6
         }], 60);
     }
-}
+};

@@ -4,17 +4,18 @@ import ballerina/io;
 
 configurable string topic = ?;
 configurable kafka:ProducerConfiguration producerConfig = ?;
+configurable string[] bootstrapServers = ?;
+configurable kafka:ConsumerConfiguration consumerConfig = ?;
+
 
 type Student record {
     string name;
     string favorite_color;
 };
 
-public function main() returns error? {
+final kafka:Consumer kafkaConsumer = check new (bootstrapServers, consumerConfig);
 
-    check kafkaListener.attach(kafkaService, "/");
-    check kafkaListener.'start();
-    runtime:registerListener(kafkaListener);
+public function main() returns error? {
 
     kafka:Producer kafkaProducer = check new (bootstrapServers, producerConfig);
     Student student = {
@@ -32,5 +33,4 @@ public function main() returns error? {
         io:println("Data is published: ", student);
         runtime:sleep(5);
     }
-
 }
