@@ -7,7 +7,7 @@ http:Service helloService = service object {
 
     resource function get offsets() returns kafka:PartitionOffset[]|error? {
         return check kafkaConsumer->getEndOffsets([{
-            topic: "topic_11",
+            topic,
             partition: 6
         }], 60);
     }
