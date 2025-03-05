@@ -1,0 +1,48 @@
+bootstrapServers = ["add-bootstrap-server"]
+topic = "topic_11"
+
+# Producer configurations
+
+[producerConfig]
+compressionType = "snappy"
+securityProtocol = "SASL_SSL"
+keySerializerType = "SER_AVRO"
+valueSerializerType = "SER_AVRO"
+keySchema = "{\"type\": \"string\", \"name\": \"stringValue\", \"namespace\": \"data\"}"
+valueSchema = "{\"namespace\": \"example.avro.test\", \"type\": \"record\", \"name\": \"testStudent\", \"fields\": [{\"name\": \"name\", \"type\": \"string\"}, {\"name\": \"favorite_color\", \"type\": \"string\"}]}"
+
+[producerConfig.auth]
+mechanism = "PLAIN"
+username = "add-username"
+password = "add-password"
+
+[producerConfig.schemaRegistryConfig]
+baseUrl = "add-schema-registry-url"
+
+[producerConfig.schemaRegistryConfig.originals]
+"basic.auth.credentials.source" = "USER_INFO"
+"schema.registry.basic.auth.user.info" = "api-key:secret"
+
+# Consumer configurations
+
+[consumerConfig]
+securityProtocol = "SASL_SSL"
+groupId = "group-id"
+keyDeserializerType = "DES_AVRO"
+valueDeserializerType = "DES_AVRO"
+topics = ["topic-name"]
+offsetReset = "earliest"
+maxPollRecords = 1
+pollingInterval = 1.0
+
+[consumerConfig.auth]
+mechanism = "PLAIN"
+username = "add-username"
+password = "add-password"
+
+[consumerConfig.schemaRegistryConfig]
+baseUrl = "add-schema-registry-url"
+
+[consumerConfig.schemaRegistryConfig.originals]
+"basic.auth.credentials.source" = "USER_INFO"
+"schema.registry.basic.auth.user.info" = "api-key:api-secret"
