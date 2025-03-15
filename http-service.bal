@@ -3,7 +3,7 @@ import ballerinax/kafka;
 
 http:Listener httpListener = check new (9090);
 
-http:Service helloService = service object {
+http:Service httpService = service object {
 
     resource function get offsets() returns kafka:PartitionOffset[]|error? {
         return check kafkaConsumer->getEndOffsets([{
